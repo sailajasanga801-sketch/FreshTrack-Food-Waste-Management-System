@@ -4,3 +4,4 @@ venv/
 __pycache__/
 *.pyc
 .env
+app_streamlit_backup.py
