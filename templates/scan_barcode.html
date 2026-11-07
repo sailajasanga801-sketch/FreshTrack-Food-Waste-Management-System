@@ -1,0 +1,303 @@
+
+{% extends "base.html" %}
+
+{% block title %}Barcode Scanner - FreshTrack{% endblock %}
+
+{% block content %}
+
+<style>
+    .scanner-container {
+        max-width: 750px;
+        margin: 30px auto;
+    }
+
+    #reader {
+        width: 100%;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    #scan-result {
+        display: none;
+        margin-top: 20px;
+    }
+
+    #scan-again {
+        display: none;
+    }
+
+    .scanner-icon {
+        font-size: 55px;
+        color: #198754;
+    }
+</style>
+
+<div class="container scanner-container">
+
+    <div class="text-center mb-4">
+        <div class="scanner-icon">
+            <i class="bi bi-upc-scan"></i>
+        </div>
+
+        <h2 class="fw-bold">Barcode Scanner</h2>
+
+        <p class="text-muted">
+            Scan a product barcode using your camera.
+        </p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div id="reader"></div>
+
+            <div id="scan-message" class="alert alert-info mt-3">
+                Allow camera permission and point your camera at a barcode.
+            </div>
+
+            <div id="scan-result">
+
+                <div class="alert alert-success">
+                    <h5>
+                        <i class="bi bi-check-circle"></i>
+                        Product Found!
+                    </h5>
+
+                    <p class="mb-1">
+                        <strong>Product:</strong>
+                        <span id="product-name"></span>
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Category:</strong>
+                        <span id="product-category"></span>
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Quantity:</strong>
+                        <span id="product-quantity"></span> kg
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Price:</strong>
+                        ₹<span id="product-price"></span>
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Expiry Date:</strong>
+                        <span id="product-expiry"></span>
+                    </p>
+
+                    <p class="mb-1">
+                        <strong>Status:</strong>
+                        <span id="product-status"></span>
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Barcode:</strong>
+                        <span id="product-barcode"></span>
+                    </p>
+                </div>
+
+                <a id="product-link" href="#" class="btn btn-success w-100">
+                    View Full Product Details
+                </a>
+
+            </div>
+
+            <button
+                id="scan-again"
+                class="btn btn-outline-primary w-100 mt-3"
+                type="button"
+                onclick="restartScanner()">
+
+                <i class="bi bi-arrow-clockwise"></i>
+                Scan Another Barcode
+
+            </button>
+
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('inventory') }}"
+           class="btn btn-outline-secondary">
+            Back to Inventory
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+
+let scanner = null;
+let isProcessing = false;
+
+function showMessage(message, type = "info") {
+
+    const messageBox = document.getElementById("scan-message");
+
+    messageBox.className = "alert alert-" + type + " mt-3";
+    messageBox.textContent = message;
+    messageBox.style.display = "block";
+}
+
+
+async function barcodeScanned(decodedText) {
+
+    if (isProcessing) return;
+
+    isProcessing = true;
+
+    if (scanner) {
+        try {
+            await scanner.pause(true);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    showMessage("Barcode detected. Searching product...", "info");
+
+    try {
+
+        const response = await fetch(
+            "{{ url_for('barcode_lookup', barcode='BARCODE_VALUE') }}".replace(
+                "BARCODE_VALUE",
+                encodeURIComponent(decodedText)
+            )
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+
+            showMessage(
+                "Product not found. Barcode: " + decodedText,
+                "danger"
+            );
+
+            document.getElementById("scan-again").style.display = "block";
+            return;
+        }
+
+        const product = data.product;
+
+        document.getElementById("product-name").textContent = product.name;
+        document.getElementById("product-category").textContent = product.category;
+        document.getElementById("product-quantity").textContent = product.quantity;
+        document.getElementById("product-price").textContent = product.price;
+        document.getElementById("product-expiry").textContent = product.expiry_date;
+        document.getElementById("product-status").textContent = product.expiry_status;
+        document.getElementById("product-barcode").textContent = product.barcode;
+
+        document.getElementById("product-link").href = product.details_url;
+
+        document.getElementById("scan-result").style.display = "block";
+        document.getElementById("scan-again").style.display = "block";
+
+        showMessage("Product successfully identified!", "success");
+
+    } catch (error) {
+
+        showMessage(
+            "Unable to connect to the server. Please try again.",
+            "danger"
+        );
+
+        document.getElementById("scan-again").style.display = "block";
+
+    }
+
+}
+
+
+function startScanner() {
+
+    if (typeof Html5QrcodeScanner === "undefined") {
+
+        showMessage(
+            "Scanner library could not load. Check your internet connection.",
+            "danger"
+        );
+
+        return;
+    }
+
+    scanner = new Html5QrcodeScanner(
+        "reader",
+        {
+            fps: 10,
+
+            qrbox: {
+                width: 250,
+                height: 150
+            },
+
+            rememberLastUsedCamera: true,
+
+            supportedScanTypes: [
+                Html5QrcodeScanType.SCAN_TYPE_CAMERA
+            ],
+
+            formatsToSupport: [
+                Html5QrcodeSupportedFormats.EAN_13,
+                Html5QrcodeSupportedFormats.EAN_8,
+                Html5QrcodeSupportedFormats.UPC_A,
+                Html5QrcodeSupportedFormats.UPC_E,
+                Html5QrcodeSupportedFormats.CODE_128,
+                Html5QrcodeSupportedFormats.CODE_39,
+                Html5QrcodeSupportedFormats.ITF
+            ]
+        },
+        false
+    );
+
+    scanner.render(
+        barcodeScanned,
+        function(errorMessage) {
+            // Normal scanning errors are ignored.
+        }
+    );
+
+}
+
+
+async function restartScanner() {
+
+    document.getElementById("scan-result").style.display = "none";
+    document.getElementById("scan-again").style.display = "none";
+
+    isProcessing = false;
+
+    try {
+
+        if (scanner) {
+            await scanner.clear();
+            scanner = null;
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    document.getElementById("reader").innerHTML = "";
+
+    startScanner();
+
+}
+
+
+window.addEventListener("load", startScanner);
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,203 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | FreshTrack{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4 fresh-dashboard">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-banner mb-4 p-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="welcome-tag">
+                    <i class="bi bi-stars"></i> FRESHTRACK OVERVIEW
+                </span>
+                <h2 class="fw-bold text-white mt-3">
+                    Welcome to FreshTrack!
+                </h2>
+                <p class="text-white mb-0">
+                    Manage your inventory smarter and help reduce food waste.
+                </p>
+            </div>
+
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{{ url_for('add_product') }}"
+                   class="btn btn-light btn-lg rounded-pill px-4">
+                    <i class="bi bi-plus-circle-fill text-success"></i>
+                    Add Product
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="stat-card stat-green h-100">
+                <div class="stat-top">
+                    <span>Total Products</span>
+                    <div class="stat-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                </div>
+                <h2>{{ total_products }}</h2>
+                <p><i class="bi bi-check-circle-fill"></i> Products in inventory</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card stat-orange h-100">
+                <div class="stat-top">
+                    <span>Expiring Soon</span>
+                    <div class="stat-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                </div>
+                <h2>{{ expiring_count }}</h2>
+                <p><i class="bi bi-hourglass-split"></i> Need attention</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card stat-red h-100">
+                <div class="stat-top">
+                    <span>Expired Products</span>
+                    <div class="stat-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                </div>
+                <h2>{{ expired_count }}</h2>
+                <p><i class="bi bi-exclamation-circle-fill"></i> Expired items</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Category Overview -->
+    <div class="section-card mb-4">
+
+        <div class="section-heading">
+            <div>
+                <h5><i class="bi bi-pie-chart-fill text-success"></i> Inventory by Category</h5>
+                <p>Check your stock distribution</p>
+            </div>
+        </div>
+
+        {% if category_totals %}
+        <div class="row g-3">
+
+            {% for category, quantity in category_totals.items() %}
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="bi bi-tags-fill"></i>
+                    </div>
+                    <div>
+                        <h6>{{ category }}</h6>
+                        <h4>{{ quantity }} kg</h4>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <p>No inventory data available yet.</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- Recent Products -->
+    <div class="section-card">
+
+        <div class="section-heading">
+            <div>
+                <h5><i class="bi bi-basket-fill text-success"></i> Recent Products</h5>
+                <p>Your recently added inventory items</p>
+            </div>
+
+            <a href="{{ url_for('inventory') }}" class="view-all-link">
+                View All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table modern-table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Expiry Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for product in recent_products %}
+
+                    <tr>
+                        <td class="fw-semibold">
+                            <i class="bi bi-box text-success me-2"></i>
+                            {{ product.name }}
+                        </td>
+
+                        <td>{{ product.category }}</td>
+
+                        <td>
+                            <span class="quantity-pill">
+                                {{ product.quantity }} kg
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ product.expiry_date.strftime('%d-%m-%Y') }}
+                        </td>
+
+                        <td>
+                            {% if product.expiry_status == 'Expired' %}
+                                <span class="status-pill status-expired">
+                                    <i class="bi bi-x-circle-fill"></i> Expired
+                                </span>
+                            {% elif product.expiry_status == 'Expiring Soon' %}
+                                <span class="status-pill status-warning">
+                                    <i class="bi bi-clock-fill"></i> Expiring Soon
+                                </span>
+                            {% else %}
+                                <span class="status-pill status-fresh">
+                                    <i class="bi bi-check-circle-fill"></i> Fresh
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                            No products added yet.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

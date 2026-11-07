@@ -1,0 +1,113 @@
+
+{% extends "base.html" %}
+
+{% block title %}CSV Upload | FreshTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">Bulk Inventory Upload</h2>
+        <p class="text-muted">
+            Upload a CSV file to add multiple products to your inventory.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Upload Form -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-cloud-arrow-up text-success"></i>
+                        Upload CSV File
+                    </h5>
+
+                    <form method="POST"
+                          action="{{ url_for('upload_csv') }}"
+                          enctype="multipart/form-data">
+
+                        <div class="mb-4">
+                            <label class="form-label">Choose CSV File</label>
+                            <input type="file"
+                                   name="file"
+                                   class="form-control"
+                                   accept=".csv"
+                                   required>
+                            <small class="text-muted">
+                                Only CSV files are supported. Maximum size: 10 MB.
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-upload"></i> Upload Inventory
+                        </button>
+
+                        <a href="{{ url_for('inventory') }}"
+                           class="btn btn-outline-secondary ms-2">
+                            Cancel
+                        </a>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-info-circle text-success"></i>
+                        CSV Format Instructions
+                    </h5>
+
+                    <p class="text-muted">
+                        Your CSV file must contain these column names:
+                    </p>
+
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Product
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Category
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Quantity (kg)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Price (₹/kg)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            Expiry Date
+                        </li>
+                    </ul>
+
+                    <p class="small text-muted mb-0">
+                        Date format: YYYY-MM-DD (Example: 2026-11-15)
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('download_csv') }}"
+           class="btn btn-outline-success">
+            <i class="bi bi-download"></i> Download CSV Template
+        </a>
+    </div>
+
+</div>
+{% endblock %}

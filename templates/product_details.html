@@ -1,0 +1,42 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="mb-4">Product Details</h2>
+
+        <h4>{{ product.name }}</h4>
+
+        <hr>
+
+        <p><strong>Product ID:</strong> {{ product.id }}</p>
+
+        <p><strong>Category:</strong> {{ product.category }}</p>
+
+        <p><strong>Quantity:</strong> {{ product.quantity }} kg</p>
+
+        <p><strong>Price:</strong> ₹{{ product.price }}</p>
+
+        <p><strong>Expiry Date:</strong> {{ product.expiry_date }}</p>
+
+        <p>
+            <strong>Expiry Status:</strong>
+            <span class="badge bg-info">
+                {{ product.expiry_status }}
+            </span>
+        </p>
+
+        <a href="{{ url_for('inventory') }}"
+           class="btn btn-primary mt-3">
+            Back to Inventory
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

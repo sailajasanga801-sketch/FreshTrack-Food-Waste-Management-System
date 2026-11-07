@@ -1,0 +1,174 @@
+
+{% extends "base.html" %}
+
+{% block title %}Expiry Tracking | FreshTrack{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">Expiry Tracking</h2>
+        <p class="text-muted">
+            Monitor product expiry dates and prevent food waste.
+        </p>
+    </div>
+
+    <!-- Expiry Summary -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Expired Products</p>
+                    <h2 class="fw-bold text-danger">{{ expired_products|length }}</h2>
+                    <i class="bi bi-exclamation-circle fs-3 text-danger"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Expiring Soon</p>
+                    <h2 class="fw-bold text-warning">{{ expiring_products|length }}</h2>
+                    <i class="bi bi-clock-history fs-3 text-warning"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Fresh Products</p>
+                    <h2 class="fw-bold text-success">{{ fresh_products|length }}</h2>
+                    <i class="bi bi-check-circle fs-3 text-success"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Expired Products -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold text-danger mb-3">
+                <i class="bi bi-exclamation-circle"></i> Expired Products
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in expired_products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.quantity }} kg</td>
+                            <td>{{ product.expiry_date.strftime('%d-%m-%Y') }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                No expired products.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expiring Soon -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold text-warning mb-3">
+                <i class="bi bi-clock-history"></i> Expiring Soon
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Expiry Date</th>
+                            <th>Days Left</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in expiring_products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.quantity }} kg</td>
+                            <td>{{ product.expiry_date.strftime('%d-%m-%Y') }}</td>
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    {{ product.days_left }} days
+                                </span>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                No products expiring soon.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fresh Products -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h5 class="fw-bold text-success mb-3">
+                <i class="bi bi-check-circle"></i> Fresh Products
+            </h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Expiry Date</th>
+                            <th>Days Left</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in fresh_products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.quantity }} kg</td>
+                            <td>{{ product.expiry_date.strftime('%d-%m-%Y') }}</td>
+                            <td>{{ product.days_left }} days</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                No fresh products available.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

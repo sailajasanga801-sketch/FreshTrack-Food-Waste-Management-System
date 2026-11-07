@@ -1,0 +1,115 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit Product' if product else 'Add Product' }} | FreshTrack{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="mb-4">
+                <h2 class="fw-bold">
+                    {{ 'Edit Product' if product else 'Add New Product' }}
+                </h2>
+                <p class="text-muted">
+                    Enter the product details below.
+                </p>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+
+                    <form method="POST"
+                          action="{% if product %}{{ url_for('edit_product', product_id=product.id) }}{% else %}{{ url_for('add_product') }}{% endif %}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Product Name</label>
+                            <input type="text"
+                                   name="name"
+                                   class="form-control"
+                                   placeholder="Example: Milk, Rice, Tomato"
+                                   value="{{ product.name if product else '' }}"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="">Select Category</option>
+
+                                {% for category in ['Fruits', 'Vegetables', 'Dairy', 'Grains', 'Meat', 'Bakery', 'Other'] %}
+                                <option value="{{ category }}"
+                                    {% if product and product.category == category %}selected{% endif %}>
+                                    {{ category }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Quantity (kg)</label>
+                            <input type="number"
+                                   name="quantity"
+                                   class="form-control"
+                                   min="0.01"
+                                   step="0.01"
+                                   placeholder="Enter quantity"
+                                   value="{{ product.quantity if product else '' }}"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Price (₹/kg)</label>
+                            <input type="number"
+                                   name="price"
+                                   class="form-control"
+                                   min="0"
+                                   step="0.01"
+                                   placeholder="Enter price"
+                                   value="{{ product.price if product else '' }}"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Barcode Number</label>
+                            <input type="text"
+                                   name="barcode"
+                                   class="form-control"
+                                   placeholder="Enter or scan product barcode"
+                                   value="{{ product.barcode if product and product.barcode else '' }}">
+                            <small class="text-muted">
+                                Optional: Enter the barcode printed on the product.
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="date"
+                                   name="expiry_date"
+                                   class="form-control"
+                                   value="{{ product.expiry_date.strftime('%Y-%m-%d') if product else '' }}"
+                                   required>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success flex-grow-1">
+                                <i class="bi bi-check-circle"></i>
+                                {{ 'Update Product' if product else 'Add Product' }}
+                            </button>
+
+                            <a href="{{ url_for('inventory') }}"
+                               class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+
+{% block title %}Register | FreshTrack{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow border-0">
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Create Account</h2>
+                        <p class="text-muted">
+                            Register your business with FreshTrack
+                        </p>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('register') }}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Business Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="business_name"
+                                   placeholder="Enter business name"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email"
+                                   class="form-control"
+                                   name="email"
+                                   placeholder="Enter email address"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password"
+                                   class="form-control"
+                                   name="password"
+                                   placeholder="Create a password (minimum 8 characters)"
+                                   minlength="8"
+                                   required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password"
+                                   class="form-control"
+                                   name="confirm_password"
+                                   placeholder="Re-enter your password"
+                                   minlength="8"
+                                   required>
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-success w-100 py-2">
+                            Create Account
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0">
+                            Already have an account?
+                            <a href="{{ url_for('login') }}"
+                               class="text-success fw-bold text-decoration-none">
+                                Login Here
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

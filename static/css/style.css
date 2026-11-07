@@ -1,0 +1,754 @@
+
+/* ================================
+   GLOBAL STYLES
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f4f7f5;
+    color: #263b32;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.container-fluid {
+    max-width: 1500px;
+}
+
+/* ================================
+   NAVBAR
+================================ */
+
+.main-navbar {
+    background: #145c43;
+    min-height: 70px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.navbar-brand {
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #b9f2d5 !important;
+}
+
+/* ================================
+   HEADINGS
+================================ */
+
+h1, h2, h3, h4 {
+    color: #174b3a;
+    font-weight: 700;
+}
+
+/* ================================
+   GENERAL CARDS
+================================ */
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 24px;
+}
+
+.metric-card {
+    border-left: 5px solid #198754;
+}
+
+.metric-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #145c43;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+
+.btn-success {
+    background: #198754;
+    border-color: #198754;
+    border-radius: 8px;
+    padding: 9px 20px;
+}
+
+.btn-success:hover {
+    background: #12633d;
+}
+
+.btn {
+    transition: all 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* ================================
+   FORMS
+================================ */
+
+.form-control,
+.form-select {
+    border-radius: 8px;
+    padding: 11px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.12);
+}
+
+/* ================================
+   TABLES
+================================ */
+
+.table {
+    background: white;
+    vertical-align: middle;
+}
+
+.table thead {
+    background: #e4f1e9;
+    color: #174b3a;
+}
+
+.table th,
+.table td {
+    padding: 13px;
+}
+
+/* ================================
+   ALERTS
+================================ */
+
+.alert {
+    border-radius: 10px;
+}
+
+/* ================================
+   FOOTER
+================================ */
+
+footer {
+    color: #718078;
+}
+
+/* =================================
+   FRESHTRACK DASHBOARD DESIGN
+================================= */
+
+.fresh-dashboard {
+    padding-top: 15px;
+    padding-bottom: 30px;
+}
+
+/* Welcome Banner */
+
+.welcome-banner {
+    background: linear-gradient(120deg, #145c43, #23966b);
+    color: white;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 22px rgba(20, 92, 67, 0.15);
+}
+
+.welcome-banner h1,
+.welcome-banner h2,
+.welcome-banner h3,
+.welcome-banner h4 {
+    color: white;
+}
+
+.welcome-banner p {
+    color: #e0f5e9;
+    margin-bottom: 0;
+}
+
+/* Dashboard Statistics */
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 23px;
+    min-height: 145px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border-left: 5px solid transparent;
+    margin-bottom: 20px;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.09);
+}
+
+.stat-card h5 {
+    color: #718078;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.stat-card h2 {
+    font-size: 32px;
+    font-weight: 750;
+    margin-bottom: 0;
+}
+
+.stat-green {
+    border-left-color: #198754;
+}
+
+.stat-green h2 {
+    color: #198754;
+}
+
+.stat-orange {
+    border-left-color: #f39c12;
+}
+
+.stat-orange h2 {
+    color: #e58a00;
+}
+
+.stat-red {
+    border-left-color: #dc3545;
+}
+
+.stat-red h2 {
+    color: #dc3545;
+}
+
+/* Dashboard Sections */
+
+.section-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+.section-card h4 {
+    margin-bottom: 20px;
+}
+
+/* Category Cards */
+
+.category-card {
+    background: #f0f8f3;
+    border: 1px solid #e0eee5;
+    border-radius: 13px;
+    padding: 18px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    background: #e4f3e9;
+    transform: translateY(-3px);
+}
+
+.category-card h5 {
+    color: #174b3a;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.category-card h3 {
+    color: #198754;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+/* Recent Products Table */
+
+.modern-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.modern-table thead th {
+    background: #e4f1e9;
+    color: #174b3a;
+    font-weight: 700;
+    border: none;
+    white-space: nowrap;
+}
+
+.modern-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.modern-table tbody tr:hover {
+    background: #f2faf5;
+}
+
+.modern-table td {
+    border-bottom: 1px solid #edf1ee;
+}
+
+/* Product Status Labels */
+
+.status-pill {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-safe {
+    background: #d9f3e3;
+    color: #14733e;
+}
+
+.status-warning {
+    background: #fff0cc;
+    color: #a56a00;
+}
+
+.status-danger {
+    background: #fde0e2;
+    color: #b42332;
+}
+
+/* Dashboard Links */
+
+.dashboard-link {
+    color: #198754;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.dashboard-link:hover {
+    color: #145c43;
+    text-decoration: underline;
+}
+
+/* Dashboard Icons */
+
+.stat-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+/* Empty States */
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #718078;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 768px) {
+
+    .welcome-banner {
+        padding: 22px;
+    }
+
+    .welcome-banner h1 {
+        font-size: 24px;
+    }
+
+    .stat-card {
+        padding: 18px;
+        min-height: 120px;
+    }
+
+    .stat-card h2 {
+        font-size: 26px;
+    }
+
+    .section-card {
+        padding: 16px;
+    }
+
+    .card-body {
+        padding: 18px;
+    }
+
+    .table th,
+    .table td {
+        padding: 9px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .navbar-brand {
+        font-size: 19px;
+    }
+
+    .welcome-banner h1 {
+        font-size: 21px;
+    }
+
+    .stat-card h2 {
+        font-size: 23px;
+    }
+}
+/* Bright Navbar Links */
+.main-navbar .navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 15px;
+    opacity: 1;
+    padding: 10px 15px;
+    margin: 0 3px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.main-navbar .navbar-nav .nav-link:hover {
+    background: #ffffff;
+    color: #145c43 !important;
+}
+
+.main-navbar .navbar-brand {
+    color: #ffffff !important;
+    font-weight: 800;
+}
+
+.main-navbar .navbar-toggler {
+    border: 1px solid white;
+}
+
+/* =====================================
+   FRESHTRACK DASHBOARD - COLOUR UPGRADE
+===================================== */
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(120deg, #064e3b, #087f5b, #14b8a6);
+    border-radius: 20px;
+    padding: 32px !important;
+    box-shadow: 0 8px 25px rgba(6, 78, 59, 0.18);
+}
+
+.welcome-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.welcome-banner h2 {
+    font-size: 30px;
+}
+
+.welcome-banner p {
+    color: #e5fff4 !important;
+    font-size: 15px;
+}
+
+/* Summary Cards */
+.stat-card {
+    border-radius: 18px;
+    padding: 25px;
+    min-height: 175px;
+    border: none;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 23px;
+}
+
+.stat-card h2 {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 8px 0;
+}
+
+.stat-card p {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Green Card */
+.stat-green {
+    background: linear-gradient(135deg, #d1fae5, #ecfdf5);
+    border-left: 6px solid #059669;
+}
+
+.stat-green .stat-icon {
+    background: #a7f3d0;
+    color: #047857;
+}
+
+.stat-green h2,
+.stat-green p,
+.stat-green .stat-top {
+    color: #065f46;
+}
+
+/* Orange Card */
+.stat-orange {
+    background: linear-gradient(135deg, #ffedd5, #fff7ed);
+    border-left: 6px solid #f59e0b;
+}
+
+.stat-orange .stat-icon {
+    background: #fed7aa;
+    color: #c2410c;
+}
+
+.stat-orange h2,
+.stat-orange p,
+.stat-orange .stat-top {
+    color: #9a3412;
+}
+
+/* Red Card */
+.stat-red {
+    background: linear-gradient(135deg, #fee2e2, #fff1f2);
+    border-left: 6px solid #ef4444;
+}
+
+.stat-red .stat-icon {
+    background: #fecaca;
+    color: #b91c1c;
+}
+
+.stat-red h2,
+.stat-red p,
+.stat-red .stat-top {
+    color: #991b1b;
+}
+
+/* Section Cards */
+.section-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    border: 1px solid #e7f0ea;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 12px;
+}
+
+.section-heading h5 {
+    color: #064e3b;
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.section-heading p {
+    color: #64776d;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Category Cards */
+.category-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+    border: 1px solid #ccebdd;
+    border-radius: 15px;
+    padding: 18px;
+    transition: 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    background: #d1fae5;
+    box-shadow: 0 7px 16px rgba(5,150,105,0.1);
+}
+
+.category-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #a7f3d0;
+    color: #047857;
+    border-radius: 13px;
+    font-size: 21px;
+}
+
+.category-card h6 {
+    color: #145c43;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.category-card h4 {
+    color: #059669;
+    font-weight: 800;
+    margin: 0;
+}
+
+/* View All Link */
+.view-all-link {
+    color: #087f5b;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.view-all-link:hover {
+    color: #064e3b;
+    text-decoration: underline;
+}
+
+/* Recent Products Table */
+.modern-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.modern-table thead th {
+    background: #d1fae5;
+    color: #064e3b;
+    font-weight: 800;
+    padding: 16px;
+    border-bottom: 2px solid #a7f3d0;
+}
+
+.modern-table tbody td {
+    color: #344b40;
+    padding: 15px;
+    border-bottom: 1px solid #edf2ee;
+    font-size: 14px;
+}
+
+.modern-table tbody tr:hover {
+    background: #f0fdf4;
+}
+
+/* Quantity Label */
+.quantity-pill {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* Product Status */
+.status-pill {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.status-fresh {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.status-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-expired {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #64776d;
+}
+
+.empty-state i {
+    font-size: 35px;
+    color: #10b981;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .welcome-banner h2 {
+        font-size: 23px;
+    }
+
+    .stat-card {
+        min-height: 150px;
+    }
+
+    .section-card {
+        padding: 16px;
+    }
+
+    .section-heading h5 {
+        font-size: 16px;
+    }
+
+    .modern-table {
+        min-width: 650px;
+    }
+}
